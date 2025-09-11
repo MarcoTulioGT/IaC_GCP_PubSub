@@ -5,7 +5,7 @@ provider "google" {
 }
 
 module "network" {
-  source         = "../modules/network"
+  source         = "../../modules/network"
   environment    = "dev"
   project        = var.project
   region         = var.region
