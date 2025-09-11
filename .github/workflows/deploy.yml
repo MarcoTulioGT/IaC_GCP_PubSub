@@ -75,6 +75,38 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
           export_environment_variables: true
+
+      - name: Crear archivo terraform.tfvars 
+        run: |
+          cat > write_tfvars.sh <<'EOF'
+          #!/bin/bash
+          {
+            echo "project        = \"$GCP_PROJECT\""
+            echo "region         = \"$GCP_REGION\""
+            echo "zone           = \"$GCP_ZONE\""
+            echo "ssh_public_key = \"$SSH_PUBLIC_KEY\""
+          } > terraform.tfvars
+          EOF
+          chmod +x write_tfvars.sh
+          ./write_tfvars.sh
+        env:
+          GCP_PROJECT: ${{ vars.GCP_PROJECT }}
+          GCP_REGION: ${{ vars.GCP_REGION }}
+          GCP_ZONE: ${{ vars.GCP_ZONE }}
+          SSH_PUBLIC_KEY: ${{ needs.security-github-actions.outputs.ssh_public_key }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Format
+        run: terraform fmt -recursive
+        env:
+          TF_LOG: DEBUG
+
+      - name: Terraform Plan
+        run: terraform plan
+        env:
+          TF_LOG: DEBUG
 ###############################
   Create-Kafka-VM:
     name: Terraform Apply Kafka VM
