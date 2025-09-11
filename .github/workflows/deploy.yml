@@ -39,3 +39,25 @@ jobs:
       - name: Verificar variable ssh_private_key
         run: |
           echo "${{ steps.generate_ssh_key.outputs.ssh_private_key }}"
+
+  Deploy-PubSub:
+    name: Terraform Apply Prefect
+    runs-on: ubuntu-latest
+    needs: security-github-actions
+    environment:
+      name: Development
+
+
+  Create-Kafka-VM:
+    name: Terraform Apply Prefect
+    runs-on: ubuntu-latest
+    needs: security-github-actions
+    environment:
+      name: Development
+
+  Create-RabbitMQ-VM:
+    name: Terraform Apply Prefect
+    runs-on: ubuntu-latest
+    needs: security-github-actions
+    environment:
+      name: Development
