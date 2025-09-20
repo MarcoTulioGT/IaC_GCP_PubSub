@@ -1,0 +1,55 @@
+name: Destroy Terraform PUBSUB GCP
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy (dev, prod)"
+        required: true
+        default: dev
+
+jobs:
+  terraform-destroy:
+    runs-on: ubuntu-latest
+    environment:
+      name: Development
+
+    defaults:
+        run:
+          working-directory: terraform/envs/${{ github.event.inputs.environment }}
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Crear terraform.tfvars
+        working-directory: terraform/envs/${{ github.event.inputs.environment }}
+        run: |
+          cat <<EOF > terraform.tfvars
+          project     = "${{ vars.GCP_PROJECT }}"
+          region      = "${{ vars.GCP_REGION }}"
+          zone        = "${{ vars.GCP_ZONE }}"
+          ssh_public_key = "${{ env.SSH_PUBLIC_KEY }}"
+          EOF
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
+        env:
+          TF_LOG: DEBUG
