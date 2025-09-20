@@ -20,5 +20,12 @@ module "network" {
 
 module "pubsub" {
   source         = "../../modules/pubsub"
-  name_topic     = "retry-topic"
+  principal_topic     = "main-topic"
+  dlq_topic      = "dlq-topic"
+  main_subscription = "main-subscription"
+  url_endpoint   = "https://example.com/push-endpoint"
+  max_delivery_attempts = 5
+  min_backoff    = "10s"
+  max_backoff    = "600s"
+
 }
