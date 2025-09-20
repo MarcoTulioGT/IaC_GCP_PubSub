@@ -10,7 +10,7 @@ module "network" {
   project        = var.project
   region         = var.region
   zone           = var.zone
-  network_name   = "default-pubsub"
+  network_name   = "default"
   policy_name    = "allow-pubsub-ports"
   allow_protocol = "tcp"
   allow_ports    = ["22", "8080", "3000", "4200", "5432"]
