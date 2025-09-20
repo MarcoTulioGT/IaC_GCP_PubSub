@@ -30,6 +30,10 @@ module "pubsub" {
 
 }
 
+resource "random_id" "suffix" {
+  byte_length = 2
+}
+
 module "bucket" {
   source         = "../../modules/bucket"
   bucket_name    = "dev-pubsub-${var.project}-my-bucket-${random_id.suffix.hex}"
