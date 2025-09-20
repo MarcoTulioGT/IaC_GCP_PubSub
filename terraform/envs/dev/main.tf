@@ -32,7 +32,7 @@ module "pubsub" {
 
 module "bucket" {
   source         = "../../modules/bucket"
-  bucket_name    = "dev-pubsub-bucket"
+  bucket_name    = "dev-pubsub-${var.project}-my-bucket-${random_id.suffix.hex}"
   location       = var.region
   force_destroy  = true
   storage_class  = "STANDARD"
