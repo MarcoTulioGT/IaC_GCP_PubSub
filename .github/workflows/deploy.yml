@@ -107,6 +107,12 @@ jobs:
         run: terraform plan
         env:
           TF_LOG: DEBUG
+      
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve
+        env:
+          TF_LOG: DEBUG
 ###############################
   Create-Kafka-VM:
     name: Terraform Apply Kafka VM
