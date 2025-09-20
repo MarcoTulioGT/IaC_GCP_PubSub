@@ -1,4 +1,4 @@
-name: Destroy Terraform PUBSUB GCP
+name: Destroy PubSub + Kafka + RabbiMQ with Terraform and Ansible
 
 on:
   workflow_dispatch:
