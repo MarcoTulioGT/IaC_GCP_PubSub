@@ -11,7 +11,7 @@ module "network" {
   region         = var.region
   zone           = var.zone
   network_name   = "default-pubsub"
-  policy_name    = "allow-prefect-ports"
+  policy_name    = "allow-pubsub-ports"
   allow_protocol = "tcp"
   allow_ports    = ["22", "8080", "3000", "4200", "5432"]
   source_ranges  = ["0.0.0.0/0"]
