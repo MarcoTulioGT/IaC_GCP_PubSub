@@ -29,3 +29,14 @@ module "pubsub" {
   max_backoff    = "600s"
 
 }
+
+module "bucket" {
+  source         = "../../modules/bucket"
+  bucket_name    = "dev-pubsub-bucket"
+  location       = var.region
+  force_destroy  = true
+  storage_class  = "STANDARD"
+  uniform_bucket_level_access  = true
+  versioning  = true
+  age  = 5
+}
