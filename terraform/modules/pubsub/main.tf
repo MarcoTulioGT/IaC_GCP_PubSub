@@ -1,3 +1,3 @@
-resource "google_pubsub_topic" "default" {
-  name = "exponencial-topic"
+resource "google_pubsub_topic" "default_topic" {
+  name = var.name_topic
 }

@@ -17,3 +17,8 @@ module "network" {
   source_ranges  = ["0.0.0.0/0"]
   description    = "Allow SSH, HTTP app, and other custom ports"
 }
+
+module "pubsub" {
+  source         = "../../modules/pubsub"
+  name_topic     = "retry-topic"
+}
